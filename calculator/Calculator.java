@@ -4,8 +4,8 @@ import java.awt.event.*;
 
 public class Calculator extends JFrame{
 
-    JButton[] b = new JButton[10];
-    JTextField[] t = new JTextField[2]; 
+    private JButton[] b = new JButton[10];
+    private JTextField[] t = new JTextField[2]; 
     
     private String op;
      
@@ -67,7 +67,7 @@ public class Calculator extends JFrame{
     }
 
     class Result implements ActionListener{
-        int ans;
+        private int ans;
         public void actionPerformed(ActionEvent e){
             switch (op) {
                 case "+":
