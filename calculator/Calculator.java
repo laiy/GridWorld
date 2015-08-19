@@ -8,6 +8,7 @@ public class Calculator extends JFrame{
     private JTextField[] t = new JTextField[2]; 
     
     private String op;
+    private int boxSize = 60;
      
     public Calculator() {
          
@@ -40,17 +41,17 @@ public class Calculator extends JFrame{
             this.add(t[i]);
         }
 
-        t[0].setBounds(0, 0, 60, 60);
-        t[1].setBounds(120, 0, 60, 60);
+        t[0].setBounds(0, 0, boxSize, boxSize);
+        t[1].setBounds(120, 0, boxSize, boxSize);
 
         for (int i = 1; i < 5; i++) {
             if (i != 2) {
-                b[i].setBounds(60 * i, 0, 60, 60);
+                b[i].setBounds(boxSize * i, 0, boxSize, boxSize);
             }
         }
 
         for (int i = 5; i < 10; i++) {
-            b[i].setBounds((i - 5) * 60, 60, 60, 60);
+            b[i].setBounds((i - 5) * boxSize, boxSize, boxSize, boxSize);
         }
             
         this.setSize(300, 150);
