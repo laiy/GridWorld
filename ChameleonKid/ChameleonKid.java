@@ -82,5 +82,5 @@ public class ChameleonKid extends Critter
         }
         return neighbors;
     }
-14.adijmrvx
+
 }
