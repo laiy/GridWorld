@@ -17,7 +17,6 @@
  */
 
 import info.gridworld.actor.Bug;
-import info.gridworld.actor.ActorWorld;
 import info.gridworld.grid.Location;
 import info.gridworld.grid.Grid;
 import info.gridworld.actor.Actor;
@@ -55,27 +54,32 @@ public class Jumper extends Bug
     public void move()
     {
         Grid<Actor> gr = getGrid();
-        if (gr == null)
+        if (gr == null) {
             return;
+        }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
         Location last = next.getAdjacentLocation(getDirection());
-        if (gr.isValid(last))
+        if (gr.isValid(last)) {
             moveTo(last);
-        else
+        }
+        else {
             removeSelfFromGrid();
+        }
     }
 
     public boolean canMove()
     {
         Grid<Actor> gr = getGrid();
-        if (gr == null)
+        if (gr == null) {
             return false;
+        }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
         Location last = next.getAdjacentLocation(getDirection());
-        if (!gr.isValid(last))
+        if (!gr.isValid(last)) {
             return false;
+        }
         Actor neighbor = gr.get(last);
         return (neighbor == null);
         // ok to move into empty location or onto flower
