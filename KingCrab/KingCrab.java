@@ -17,11 +17,8 @@
  */
 
 import info.gridworld.actor.Actor;
-import info.gridworld.actor.Critter;
-import info.gridworld.grid.Grid;
 import info.gridworld.grid.Location;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -36,15 +33,36 @@ public class KingCrab extends CrabCritter
         for (Actor a : actors)
         {
             Location currentLocation = getLocation();
-            int col = currentLocation.getCol();
-            int row = currentLocation.getRow();
-            int x = (a.getLocation().getCol() - col == 1) ? 2 : -2;
-            if (getGrid().isValid(new Location(row, col + x))) {
-                if (getGrid().get(new Location(row, col + x)) == null) {
-                    a.moveTo(new Location(row, col + x));
-                } else {
-                    a.removeSelfFromGrid();
+            int row = currentLocation.getRow(), col = currentLocation.getCol();
+            Location aLocation = a.getLocation();
+            ArrayList<Location> validToMove = getGrid().getEmptyAdjacentLocations(aLocation);
+            ArrayList<Location> cantMoveTo = new ArrayList<Location>();
+            cantMoveTo.add(currentLocation);
+            cantMoveTo.add(new Location(row, col));
+            cantMoveTo.add(new Location(row, col));
+            int[] dirs =
+                { Location.AHEAD, Location.HALF_LEFT, Location.HALF_RIGHT, Location.LEFT, Location.RIGHT };
+            for (Location loc : getLocationsInDirections(dirs))
+            {
+                cantMoveTo.add(loc);
+            }
+            boolean moved = false;
+            for (Location l : validToMove) {
+                boolean go = true;
+                for (Location badL : cantMoveTo) {
+                    if (l == badL) {
+                        go = false;
+                        break;
+                    }
                 }
+                if (go) {
+                    a.moveTo(l);
+                    moved = true;
+                    break;
+                }
+            }
+            if (!moved) {
+                a.removeSelfFromGrid();
             }
         }
     }
