@@ -23,20 +23,16 @@ import info.gridworld.grid.Location;
  * This class runs a world that contains box bugs. <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public final class DancingBugRunner
+public final class JumperRunner
 {
-    private DancingBugRunner() {}
+    private JumperRunner() {}
     public static void main(String[] args)
     {
         ActorWorld world = new ActorWorld();
-        int[] arr = {2, 3, 5, 7, 8, 11, 4, 6, 9};
-        DancingBug bob = new DancingBug(4, arr);
-        DancingBug a = new DancingBug(4, arr);
-        DancingBug c = new DancingBug(4, arr);
-        bob.setDirection(90);
-        world.add(new Location(0, 0), bob);
-        world.add(new Location(5, 5), a);
-        world.add(new Location(6, 6), c);
+        Jumper alice = new Jumper();
+        Jumper bob = new Jumper();
+        world.add(new Location(7, 8), alice);
+        world.add(new Location(5, 5), bob);
         world.show();
     }
 }
