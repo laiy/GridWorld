@@ -120,10 +120,12 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
         SparseGridNode node = occupantArray[row];
         boolean locationNodeExisted = false;
         while (node != null) {
-            if (node.getNext().getCol() == col) {
-                node.getNext().setOccupant(obj);
-                locationNodeExisted = true;
-                break;
+            if (node.getNext() != null) {
+                if (node.getNext().getCol() == col) {
+                    node.getNext().setOccupant(obj);
+                    locationNodeExisted = true;
+                    break;
+                }
             }
             node = node.getNext();
         }
