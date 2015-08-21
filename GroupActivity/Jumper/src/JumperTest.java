@@ -67,7 +67,7 @@ public class JumperTest {
         assertEquals(135, jumper.getDirection());
         assertEquals(new Location(0, 0), jumper.getLocation());
         b.removeSelfFromGrid();
-    }
+    }9=,cdefgjmrt`
 
     @Test
     public void testcase5() {
