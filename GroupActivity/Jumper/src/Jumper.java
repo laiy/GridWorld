@@ -36,21 +36,6 @@ public class Jumper extends Bug
     {
     }
 
-    /**
-     * Moves to the next location of the square.
-     */
-    public void act()
-    {
-        if (canMove())
-        {
-            move();
-        }
-        else
-        {
-            turn();
-        }
-    }
-
     public void move()
     {
         Grid<Actor> gr = getGrid();

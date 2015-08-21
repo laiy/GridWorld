@@ -5,6 +5,11 @@
             <include name="gridworld.jar"/>
         </fileset>
     </path>
+    <path id="test.path">
+        <fileset dir=".">
+            <include name="junit-4.9.jar"/>
+        </fileset>
+    </path>
     <property name="buildDir" value="build"/>
 
     <target name="init">
@@ -26,5 +31,27 @@
                 <pathelement path="build/classes"/>
             </classpath>
         </java>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="true">
+            <classpath refid="compile.path"/>
+            <classpath refid="test.path"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+            <classpath>
+                <pathelement path="test"/>
+            </classpath>
+            <test name="JumperTest"/>
+        </junit>
+
+        <junitreport todir="testReport">
+            <fileset dir="testReport">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="testReport" />
+        </junitreport>
+
     </target>
 </project>
