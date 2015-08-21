@@ -1,0 +1,9 @@
+Testsuite: JumperTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.019 sec
+
+Testcase: initializationError took 0.003 sec
+	Caused an ERROR
+Method init() should be static
+java.lang.Exception: Method init() should be static
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+

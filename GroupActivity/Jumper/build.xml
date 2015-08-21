@@ -21,6 +21,7 @@
         <mkdir dir="${buildDir}/classes"/>
         <javac srcdir="${basedir}/src" destdir="${buildDir}/classes" includeantruntime="on">
             <classpath refid="compile.path"/>
+            <classpath refid="test.path"/>
         </javac>
     </target>
 
@@ -34,24 +35,19 @@
     </target>
 
     <target name="test" depends="compile">
-        <junit printsummary="true">
+        <junit printsummary="on" fork="true" haltonfailure="yes">
             <classpath refid="compile.path"/>
             <classpath refid="test.path"/>
             <classpath>
                 <pathelement path="build/classes"/>
             </classpath>
-            <classpath>
-                <pathelement path="test"/>
-            </classpath>
-            <test name="JumperTest"/>
+            <formatter type="plain" />
+            <batchtest todir="report">
+                <fileset dir="src">
+                    <include name="**/*Test*.java" />
+                </fileset>
+            </batchtest>
         </junit>
-
-        <junitreport todir="testReport">
-            <fileset dir="testReport">
-                <include name="TEST-*.xml" />
-            </fileset>
-            <report format="frames" todir="testReport" />
-        </junitreport>
-
     </target>
+
 </project>
