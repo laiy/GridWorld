@@ -59,11 +59,15 @@ public class Jumper extends Bug
         }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
-        Location last = next.getAdjacentLocation(getDirection());
-        if (gr.isValid(last)) {
-            moveTo(last);
-        }
-        else {
+        if (gr.isValid(next)) {
+            Location last = next.getAdjacentLocation(getDirection());
+            if (gr.isValid(last)) {
+                moveTo(last);
+            }
+            else {
+                removeSelfFromGrid();
+            }
+        } else {
             removeSelfFromGrid();
         }
     }
@@ -76,12 +80,16 @@ public class Jumper extends Bug
         }
         Location loc = getLocation();
         Location next = loc.getAdjacentLocation(getDirection());
-        Location last = next.getAdjacentLocation(getDirection());
-        if (!gr.isValid(last)) {
+        if (gr.isValid(next)) {
+            Location last = next.getAdjacentLocation(getDirection());
+            if (!gr.isValid(last)) {
+                return false;
+            }
+            Actor neighbor = gr.get(last);
+            return (neighbor == null);
+        } else {
             return false;
         }
-        Actor neighbor = gr.get(last);
-        return (neighbor == null);
         // ok to move into empty location or onto flower
         // not ok to move onto any other actor
     }
