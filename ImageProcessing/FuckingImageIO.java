@@ -20,7 +20,7 @@ public class FuckingImageIO implements IImageIO {
         in.read(fourBytesBuffer, 0, 4);
         int height = (((int)fourBytesBuffer[3] & 0xFF) << 24) | (((int)fourBytesBuffer[2] & 0xFF) << 16) |
             (((int)fourBytesBuffer[1] & 0xFF) << 8) | ((int)fourBytesBuffer[0] & 0xFF);
-        in.skip(6);
+        in.skip(8);
         in.read(fourBytesBuffer, 0, 4);
         int imageSize = (((int)fourBytesBuffer[3] & 0xFF) << 24) | (((int)fourBytesBuffer[2] & 0xFF) << 16) |
             (((int)fourBytesBuffer[1] & 0xFF) << 8) | ((int)fourBytesBuffer[0] & 0xFF);
