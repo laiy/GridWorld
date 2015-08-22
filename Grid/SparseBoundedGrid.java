@@ -76,12 +76,10 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
         // Look at all grid locations.
         for (int r = 0; r < getNumRows(); r++)
         {
-            for (int c = 0; c < getNumCols(); c++)
-            {
-                // If there's an object at this location, put it in the array.
-                Location loc = new Location(r, c);
-                if (get(loc) != null)
-                    theLocations.add(loc);
+            SparseGridNode node = occupantArray[r];
+            while (node != null) {
+                theLocations.add(new Location(r, node.getCol()));
+                node = node.getNext();
             }
         }
 
@@ -141,12 +139,22 @@ public class SparseBoundedGrid<E> extends AbstractGrid<E>
                 } else {
                     SparseGridNode pre = node;
                     node = node.getNext();
-                    while (col > node.getCol()) {
-                        pre = pre.getNext();
-                        node = node.getNext();
+                    if (node == null) {
+                        SparseGridNode n = new SparseGridNode(obj, col, null);
+                        pre.setNext(n);
+                    } else {
+                        while (node != null && col > node.getCol()) {
+                            pre = pre.getNext();
+                            node = node.getNext();
+                        }
+                        if (node == null) {
+                            SparseGridNode n = new SparseGridNode(obj, col, null);
+                            pre.setNext(n);
+                        } else {
+                            SparseGridNode n = new SparseGridNode(obj, col, node);
+                            pre.setNext(n);
+                        }
                     }
-                    SparseGridNode n = new SparseGridNode(obj, col, node);
-                    pre.setNext(n);
                 }
             }
         }
