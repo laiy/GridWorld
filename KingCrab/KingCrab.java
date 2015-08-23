@@ -38,8 +38,6 @@ public class KingCrab extends CrabCritter
             ArrayList<Location> validToMove = getGrid().getEmptyAdjacentLocations(aLocation);
             ArrayList<Location> cantMoveTo = new ArrayList<Location>();
             cantMoveTo.add(currentLocation);
-            cantMoveTo.add(new Location(row, col));
-            cantMoveTo.add(new Location(row, col));
             int[] dirs =
                 { Location.AHEAD, Location.HALF_LEFT, Location.HALF_RIGHT, Location.LEFT, Location.RIGHT };
             for (Location loc : getLocationsInDirections(dirs))
@@ -50,7 +48,7 @@ public class KingCrab extends CrabCritter
             for (Location l : validToMove) {
                 boolean go = true;
                 for (Location badL : cantMoveTo) {
-                    if (l == badL) {
+                    if (l.equals(badL)) {
                         go = false;
                         break;
                     }
