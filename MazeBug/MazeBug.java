@@ -1,3 +1,4 @@
+package info.gridworld.maze;
 
 import info.gridworld.actor.Actor;
 import info.gridworld.actor.Bug;
@@ -59,7 +60,9 @@ public class MazeBug extends Bug {
 			move();
 			stepCount++;
 			crossLocation.pop();
+			Location temp = crossLocation.pop();
 			last = crossLocation.peek();
+			crossLocation.push(temp);
 		}
 	}
 
@@ -80,7 +83,7 @@ public class MazeBug extends Bug {
 			Location l = loc.getAdjacentLocation(getDirection() + i * Location.RIGHT);
 			if (gr.isValid(l)) {
 				Actor a = gr.get(l);
-				if (a instanceof Rock && a.getColor() == Color.RED) {
+				if (a instanceof Rock && a.getColor().getRed() == Color.RED.getRed()) {
 					isEnd = true;
 					break;
 				} else if (a == null) {
