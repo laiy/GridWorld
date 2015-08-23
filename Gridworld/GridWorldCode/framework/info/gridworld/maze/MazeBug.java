@@ -86,7 +86,6 @@ public class MazeBug extends Bug {
             last = crossLocation.peek();
             crossLocation.push(temp);
         }
-       
     }
 
     /**
