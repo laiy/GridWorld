@@ -296,8 +296,8 @@ public class Jigsaw {
 		String filePath = "ASearchDialog.txt";
 		PrintWriter pw = new PrintWriter(new FileWriter(filePath));
 		
-		// 访问节点数大于30000个则认为搜索失败
-		int maxNodesNum = 30000;  
+		// 访问节点数大于25000个则认为搜索失败
+		int maxNodesNum = 25000;
 		
 		// 用以存放某一节点的邻接节点
 		Vector<JigsawNode> followJNodes = new Vector<JigsawNode>(); 
@@ -350,11 +350,34 @@ public class Jigsaw {
 	private void estimateValue(JigsawNode jNode) {
 		int s = 0; // 后续节点不正确的数码个数
 		int dimension = JigsawNode.getDimension();
+
+		int badLocation = 0;
+		int manhattanDistance = 0;
+		int euclideanDistance = 0;
+		int endRow, endCol, currentRow, currentCol;
+
 		for(int index =1 ; index<dimension*dimension; index++){
 			if(jNode.getNodesState()[index]+1!=jNode.getNodesState()[index+1])
 				s++;
+			if (index < dimension * (dimension - 1)) {
+				if(jNode.getNodesState()[index] + 5!= jNode.getNodesState()[index + dimension]) {
+					s++;
+				}
+			}
+			if (jNode.getNodesState()[index] != index && jNode.getNodesState()[index] != 0) {
+				badLocation++;
+			}
+			if (jNode.getNodesState()[index] != endJNode.getNodesState()[index] && jNode.getNodesState()[index] != 0) {
+				endRow = (endJNode.getNodesState()[index] - 1) / dimension;
+				endCol = (endJNode.getNodesState()[index] - 1) % dimension;
+				currentRow = (jNode.getNodesState()[index] - 1) / dimension;
+				currentCol = (jNode.getNodesState()[index] - 1) % dimension;
+				manhattanDistance += Math.abs(endRow - currentRow) + Math.abs(endCol - currentCol);
+				euclideanDistance += (int)Math.sqrt(Math.pow(endRow - currentRow, 2) + Math.pow(endCol - currentCol, 2));
+			}
 		}
-		jNode.setEstimatedValue(s);
+
+		jNode.setEstimatedValue(s + badLocation + manhattanDistance + euclideanDistance);
 	}
 
 }
