@@ -249,7 +249,30 @@ public class Jigsaw {
 		PrintWriter pw = new PrintWriter(new FileWriter(filePath));
 		// *************************************
 
-		// Write your code here.
+		isCompleted = false;
+		Vector<JigsawNode> followJNodes = new Vector<JigsawNode>(); 
+		this.openList.addElement(this.beginJNode);
+
+		while (!this.openList.isEmpty()) {
+			this.currentJNode = this.openList.elementAt(0);
+			if (this.currentJNode.equals(this.endJNode)){
+				isCompleted = true;
+				this.calSolutionPath();
+				break;
+			}
+			this.openList.removeElementAt(0);
+			this.closeList.addElement(this.currentJNode);
+			searchedNodesNum++;
+
+			pw.println("Searching.....Number of searched nodes:" + this.closeList.size() + "   Current state:" + this.currentJNode.toString());
+			System.out.println("Searching.....Number of searched nodes:" + this.closeList.size() + "   Current state:" + this.currentJNode.toString());
+
+			followJNodes = this.findFollowJNodes(this.currentJNode);
+			while (!followJNodes.isEmpty()) {
+				this.openList.addElement(followJNodes.elementAt(0));
+				followJNodes.removeElementAt(0);
+			}
+		}
 		
 		
 		// *************************************
