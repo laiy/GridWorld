@@ -78,6 +78,8 @@ public class UnboundedGrid2<E> extends AbstractGrid<E>
             throw new NullPointerException("loc == null");
         if (!isValid(loc))
             throw new IllegalArgumentException("Location " + loc + " is not valid");
+        if (loc.getRow() >= size || loc.getCol() >= size)
+            return null;
 
         return (E)occupantArray[loc.getRow()][loc.getCol()];
     }
@@ -90,7 +92,7 @@ public class UnboundedGrid2<E> extends AbstractGrid<E>
         int row = loc.getRow();
         int col = loc.getCol();
         int tempSize = size;
-        while (row > size || col > size) {
+        while (row >= tempSize || col >= tempSize) {
             tempSize *= 2;
         }
         if (tempSize != size) {

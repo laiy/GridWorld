@@ -33,28 +33,38 @@ import java.util.*;
 public class SparseBoundedGrid3<E> extends AbstractGrid<E>
 {
     private TreeMap<Location, E> occupantMap;
+    private int col;
+    private int row;
+
 
     /**
      * Constructs an empty unbounded grid.
      */
-    public SparseBoundedGrid3()
+    public SparseBoundedGrid3(int r, int c)
     {
+        if (r <= 0)
+            throw new IllegalArgumentException("rows <= 0");
+        if (c <= 0)
+            throw new IllegalArgumentException("cols <= 0");
+        row = r;
+        col = c;
         occupantMap = new TreeMap<Location, E>();
     }
 
     public int getNumRows()
     {
-        return -1;
+        return row;
     }
 
     public int getNumCols()
     {
-        return -1;
+        return col;
     }
 
     public boolean isValid(Location loc)
     {
-        return true;
+        return 0 <= loc.getRow() && loc.getRow() < getNumRows()
+                && 0 <= loc.getCol() && loc.getCol() < getNumCols();
     }
 
     public ArrayList<Location> getOccupiedLocations()

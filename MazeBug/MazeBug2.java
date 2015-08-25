@@ -81,10 +81,19 @@ public class MazeBug extends Bug {
 
             move();
             stepCount++;
-            crossLocation.pop();
-            Location temp = crossLocation.pop();
-            last = crossLocation.peek();
-            crossLocation.push(temp);
+            if (crossLocation.size()) {
+                crossLocation.pop();
+            }
+            Location temp;
+            if (crossLocation.size()) {
+                temp = crossLocation.pop();
+            }
+            if (crossLocation.size()) {
+                last = crossLocation.peek();
+            }
+            if (temp != null) {
+                crossLocation.push(temp);
+            }
         }
     }
 
