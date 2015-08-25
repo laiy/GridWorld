@@ -21,10 +21,13 @@ import javax.swing.JOptionPane;
 public class MazeBug extends Bug {
     public Location next;
     public Location last;
+    public Location origin;
     public boolean isEnd = false;
     public Stack<Location> crossLocation = new Stack<Location>();
     public Integer stepCount = 0;
+    boolean goBack = false;
     boolean hasShown = false;//final message has been shown
+    boolean firstTime = true;
 
     int directionCounts[] = new int[4];
 
@@ -46,7 +49,11 @@ public class MazeBug extends Bug {
      * Moves to the next location of the square.
      */
     public void act() {
-        boolean willMove = canMove();
+    	if (firstTime) {
+    		origin = getLocation();
+    		firstTime = false;
+    	}
+	    boolean willMove = canMove();
         if (isEnd == true) {
         //to show step count when reach the goal        
             if (hasShown == false) {
@@ -54,7 +61,11 @@ public class MazeBug extends Bug {
                 JOptionPane.showMessageDialog(null, msg);
                 hasShown = true;
             }
-        } else if (willMove) {
+        } else if (willMove || goBack) {
+        	if (goBack) {
+        		goBack = false;
+        		next = origin;
+        	}
             last = getLocation();
             crossLocation.push(next);
             move();
@@ -79,21 +90,16 @@ public class MazeBug extends Bug {
                     break;
             }
 
-            move();
             stepCount++;
-            if (crossLocation.size()) {
-                crossLocation.pop();
-            }
-            Location temp;
-            if (crossLocation.size()) {
-                temp = crossLocation.pop();
-            }
-            if (crossLocation.size()) {
-                last = crossLocation.peek();
-            }
-            if (temp != null) {
-                crossLocation.push(temp);
-            }
+            crossLocation.pop();
+            if (crossLocation.size() > 2) {
+            	Location temp = crossLocation.pop();
+            	last = crossLocation.peek();
+            	crossLocation.push(temp);
+	        } else {
+	        	goBack = true;
+	        }
+	        move();
         }
     }
 
@@ -205,8 +211,12 @@ public class MazeBug extends Bug {
             return;
         Location loc = getLocation();
         if (gr.isValid(next)) {
-            setDirection(getLocation().getDirectionToward(next));
-            moveTo(next);
+        	if (next != origin) {
+	            setDirection(getLocation().getDirectionToward(next));
+	            moveTo(next);
+        	} else {
+        		moveTo(origin);
+        	}
         } else
             removeSelfFromGrid();
         Flower flower = new Flower(getColor());
